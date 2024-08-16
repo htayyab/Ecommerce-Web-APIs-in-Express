@@ -1,13 +1,6 @@
 import {body} from 'express-validator';
 
-const registerValidation = [
-
-    // Validate and sanitize user ID
-    // body('user')
-    //     .notEmpty()
-    //     .withMessage('User ID is required')
-    //     .isMongoId()
-    //     .withMessage('Invalid User ID'),
+export const registerValidation = [
 
     // Validate and sanitize firstName
     body('firstName')
@@ -46,4 +39,18 @@ const registerValidation = [
         .withMessage('Passwords do not match'),
 ];
 
-export default registerValidation;
+export const loginValidation = [
+
+    body('email')
+        .isEmail()
+        .withMessage('Please provide a valid email address')
+        .normalizeEmail(),
+
+    body('password')
+        .isLength({min: 8})
+        .withMessage('Password must be at least 8 characters long')
+        .matches(/\d/)
+        .withMessage('Password must contain at least one number')
+        .matches(/[a-zA-Z]/)
+        .withMessage('Password must contain at least one letter'),
+];
