@@ -11,7 +11,7 @@ export const register = async (req, res) => {
         return res.status(400).json({errors: errors.array()});
     }
 
-    const {firstName, lastName, email, password} = req.body;
+    const {firstName, lastName, email, password, phone} = req.body;
 
     try {
         // Check if user already exists
@@ -24,16 +24,17 @@ export const register = async (req, res) => {
 
         // Create and save the new user
         const user = new User({
+            firstName,
+            lastName,
             email,
             password: hashedPassword,
+            phone,
         });
         const savedUser = await user.save();
 
         // Create and save the customer
         const customer = new Customer({
             user: savedUser._id, // Use the saved user's _id
-            firstName,
-            lastName,
         });
         await customer.save();
 
@@ -47,7 +48,7 @@ export const register = async (req, res) => {
         // Respond with success and user data
         res.status(201).json({
             message: 'User registered successfully',
-            token, // Include the token in the response
+            token,
             user: {
                 _id: savedUser._id,
                 email: savedUser.email,

@@ -7,16 +7,12 @@ const employeeSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    firstName: {
+    status: {
         type: String,
-        required: true,
-        trim: true
-    },
-    lastName: {
-        type: String,
-        trim: true,
-        default: null
-    },
+        enum: ['active', 'inactive'],
+        default: 'inactive',
+        required: true
+    }
 },{ timestamps : true });
 
 const Employee = mongoose.model('Employee', employeeSchema);

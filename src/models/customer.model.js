@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-import User from './user.model.js';
 
 const customerSchema = new mongoose.Schema({
     user: {
@@ -7,17 +6,11 @@ const customerSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
-    firstName: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    lastName: {
-        type: String,
-        trim: true,
-        default: null
-    },
-}, { timestamps : true });
+    referral: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Customer',
+    }]
+}, { timestamps: true });
 
 const Customer = mongoose.model('Customer', customerSchema);
 
