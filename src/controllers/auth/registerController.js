@@ -1,10 +1,10 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import User from "../models/user.model.js";
-import Customer from "../models/customer.model.js";
-import Token from "../models/token.model.js";
+import User from "../../models/user.model.js";
+import Customer from "../../models/customer.model.js";
+import Token from "../../models/token.model.js";
 import crypto from 'crypto';
-import sendVerificationEmail from '../utils/sendVerificationEmail.js';
+import sendVerificationEmail from '../../utils/sendVerificationEmail.js';
 
 const register = async (req, res) => {
     const {firstName, lastName, email, password, phone} = req.body;

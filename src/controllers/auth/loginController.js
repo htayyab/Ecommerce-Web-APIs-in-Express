@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import User from "../models/user.model.js";
-import Customer from "../models/customer.model.js";
+import User from "../../models/user.model.js";
+import Customer from "../../models/customer.model.js";
 
 const login = async (req, res) => {
     try {

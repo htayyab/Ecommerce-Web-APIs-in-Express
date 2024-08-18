@@ -10,7 +10,7 @@ import { validationResult } from 'express-validator';
             error,
         });
     }
-    next();
+     next();
 };
 
  export default handleValidationErrors;

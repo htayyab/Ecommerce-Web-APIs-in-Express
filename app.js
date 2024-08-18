@@ -20,10 +20,6 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: false })); 
 
 // Routes
-app.get('/', (req, res) => {
-    res.status(200).send('Hello, World!');
-});
-
 app.use('/api/', authRoutes);
 app.use('/api/categories',authMiddleware,categoryRoutes);
 
