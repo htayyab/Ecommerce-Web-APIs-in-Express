@@ -9,6 +9,7 @@ const customerSchema = new mongoose.Schema({
     referral: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Customer',
+        required : false
     }]
 }, { timestamps: true });
 
