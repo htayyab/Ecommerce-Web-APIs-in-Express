@@ -42,7 +42,8 @@ const login = async (req, res) => {
                 firstName: userExists.firstName,
                 lastName: userExists.lastName,
                 phone: userExists.phone,
-                token
+                token,
+                role:userExists.role
             },
         });
     } catch (error) {

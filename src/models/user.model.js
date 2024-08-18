@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import Role from "./role.model.js"
 
 const userSchema = new mongoose.Schema({
     firstName: {
@@ -31,15 +32,10 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    role: {
-        type: String,
-        required: true,
-        default: "Customer",
-        enum: [
-          "Admin",
-          "Customer"
-        ],
-      },
+    roles: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Role',
+    }],
 
 }, { timestamps: true });
 
