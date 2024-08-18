@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import Role from "./role.model.js"
 
 const userSchema = new mongoose.Schema({
     firstName: {
@@ -31,6 +32,11 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
+    roles: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Role',
+    }],
+
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
