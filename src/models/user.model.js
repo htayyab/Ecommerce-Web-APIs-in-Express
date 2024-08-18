@@ -1,4 +1,3 @@
-// user.model.js
 import mongoose from 'mongoose';
 
 const userSchema = new mongoose.Schema({
@@ -27,7 +26,11 @@ const userSchema = new mongoose.Schema({
         type: String,
         trim: true,
         required: false,
-    }
+    },
+    isVerified: {
+        type: Boolean,
+        default: false,
+    },
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
