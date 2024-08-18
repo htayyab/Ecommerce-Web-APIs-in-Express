@@ -6,15 +6,15 @@ const roleSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
+        trim : true
     },
     description: {
         type: String,
-        required: true,
+        required: false,
+        trim : true
     },
     
-}, {
-    timestamps: true,
-});
+}, {timestamps: true});
 
 const Role = mongoose.model('Role', roleSchema);
 
