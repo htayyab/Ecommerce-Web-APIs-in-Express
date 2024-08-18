@@ -23,7 +23,7 @@ const login = async (req, res) => {
         const token = jwt.sign(
             { userId: userExists._id, email: userExists.email },
             process.env.JWT_SECRET,
-            { expiresIn: "1m" }
+            { expiresIn: "10m" }
         );
 
         // Set the token as an HttpOnly cookie in the response

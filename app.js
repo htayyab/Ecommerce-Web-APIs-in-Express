@@ -3,6 +3,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import cookieParser from 'cookie-parser'; 
 import connectDB from './src/config/db.js';
+import authMiddleware from './src/middlewares/authMiddleware.js';
 import authRoutes from './src/routes/auth.routes.js';
 import categoryRoutes from './src/routes/category.routes.js';
 
@@ -23,14 +24,8 @@ app.get('/', (req, res) => {
     res.status(200).send('Hello, World!');
 });
 
-app.use('/api/', authRoutes); 
-app.use('/api/categories', categoryRoutes); 
-
-// Global error handling middleware (optional)
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).send({ status: 'error', message: 'Something went wrong!' });
-});
+app.use('/api/', authRoutes);
+app.use('/api/categories',authMiddleware,categoryRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 5000;
