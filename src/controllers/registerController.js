@@ -7,7 +7,7 @@ import crypto from 'crypto';
 import sendVerificationEmail from '../utils/sendVerificationEmail.js';
 
 const register = async (req, res) => {
-    const {firstName, lastName, email, password, phone} = req.body;
+    const {firstName, lastName, email, password, confirmPasssword ,phone,role} = req.body;
 
     try {
         const userExists = await User.findOne({email});
@@ -23,6 +23,7 @@ const register = async (req, res) => {
             email,
             password: hashedPassword,
             phone,
+            role
         });
         const savedUser = await user.save();
 
@@ -34,7 +35,7 @@ const register = async (req, res) => {
 
         // Generate JWT token
         const token = jwt.sign(
-            {userId: savedUser._id, email: savedUser.email},
+            {userId: savedUser._id, email: savedUser.email,role:savedUser.role},
             process.env.JWT_SECRET,
             {expiresIn: "1h"}
         );
@@ -64,7 +65,8 @@ const register = async (req, res) => {
                 firstName,
                 lastName,
                 phone,
-                token
+                token,
+                role:savedUser.role,
             },
         });
         
