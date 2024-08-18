@@ -2,21 +2,17 @@ import mongoose from 'mongoose';
 import User from "./user.model.js";
 
 const employeeSchema = new mongoose.Schema({
-    user: {
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
-    firstName: {
+    status: {
         type: String,
-        required: true,
-        trim: true
-    },
-    lastName: {
-        type: String,
-        trim: true,
-        default: null
-    },
+        enum: ['active', 'inactive'],
+        default: 'inactive',
+        required: true
+    }
 },{ timestamps : true });
 
 const Employee = mongoose.model('Employee', employeeSchema);
