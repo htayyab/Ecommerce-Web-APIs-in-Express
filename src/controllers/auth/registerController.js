@@ -70,8 +70,8 @@ const register = async (req, res) => {
             },
         });
         
-    } catch (e) {
-        res.status(500).send({message: `Server error: ${e.message}`});
+    } catch (error) {
+        res.status(500).send({message: `Server error: ${error.message}`});
     }
 };
 
