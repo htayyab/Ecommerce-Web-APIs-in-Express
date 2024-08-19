@@ -2,8 +2,9 @@ import mongoose from 'mongoose';
 import { body } from "express-validator";
 import bcrypt from 'bcryptjs';
 import User from '../../models/user.model.js';
+import Token from '../../models/token.model.js';
 
-const updatePassword = async (req, res) => {
+export const updatePassword = async (req, res) => {
     try {
         const { oldPassword, newPassword } = req.body;
         const user = await User.findById(req.user.userId);
@@ -25,5 +26,26 @@ const updatePassword = async (req, res) => {
         res.status(500).json({ message: 'Server error.', error: error.message });
     }
 }
+export const updatePasswordForm= async (req, res) => {
+    const token = req.query.token;
 
-export default updatePassword;
+    try {
+        // Find the token in the database
+        const tokenDocument = await Token.findOne({ token: token });
+
+        if (!tokenDocument) {
+            return res.status(400).json({ message: 'Invalid token' });
+        }
+        // Check if the token has expired
+        if (tokenDocument.expiresAt < Date.now()) {
+            return res.status(400).json({ message: 'Token has expired' });
+        }
+
+        // Token is valid and not expired
+        res.status(200).json({ message: 'Token is valid', token });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error });
+    }
+}
+
+
