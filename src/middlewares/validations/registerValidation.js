@@ -23,7 +23,7 @@ export const registerValidation = [
 
     // Validate and sanitize password
     body('password')
-        .isLength({ min: 8 })
+        .isLength({ min: 6 })
         .withMessage('Password must be at least 8 characters long')
         .matches(/\d/)
         .withMessage('Password must contain at least one number')
@@ -51,7 +51,7 @@ export const loginValidation = [
         .normalizeEmail(),
 
     body('password')
-        .isLength({min: 8})
+        .isLength({min: 6})
         .withMessage('Password must be at least 8 characters long')
         .matches(/\d/)
         .withMessage('Password must contain at least one number')
