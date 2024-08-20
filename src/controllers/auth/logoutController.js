@@ -1,16 +1,19 @@
+const logout = (req, res) => {
 
-const logout=(req, res) => {
-    // Fetch the token from cookies
-    const token = req.cookies.token;
-
+    const token = req.cookies.token || req.headers.authorization?.split(' ')[1];
     if (!token) {
-        return res.status(400).json({ message: 'User is not logged in' });
+        return res.status(401).send({
+            message: 'No token provided',
+        });
     }
+    res.clearCookie("token", {
+        httpOnly: true,
+        sameSite: "strict"
+    });
 
-    // Clear the token cookie
-    res.clearCookie('token');
+    return res.status(200).json({
+        message: "Logged out successfully"
+    });
+};
 
-    // Send a success message
-    return res.status(200).json({ message: 'Logged out successfully' });
-}
 export default logout;

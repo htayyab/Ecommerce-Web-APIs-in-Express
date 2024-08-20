@@ -22,7 +22,7 @@ const sendVerificationEmail = async (email, token) => {
         html: `<p>Please verify your email by clicking the link below:</p>
         <a href="${process.env.CLIENT_URL}/api/verify-email?token=${token}">Verify Email</a>`,
     };
-
+    
     await transporter.sendMail(mailOptions);
 };
 
