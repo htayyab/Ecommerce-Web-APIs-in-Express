@@ -8,8 +8,8 @@ import authMiddleware from '../middlewares/authMiddleware.js';
 import {registerValidation, loginValidation} from '../middlewares/validations/registerValidation.js';
 import updatePasswordValidation from "../middlewares/validations/updatePasswordValidation.js";
 import handleValidationErrors  from '../utils/handleValidationErrors.js';
-import forgetPassword from '../controllers/auth/forgotPasswordController.js';
 import logout from '../controllers/auth/logoutController.js';
+import forgotPasswordValidation from "../middlewares/validations/forgotPasswordValidation.js"
 
 
 
