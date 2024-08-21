@@ -2,17 +2,26 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../../models/user.model.js";
 import Customer from "../../models/customer.model.js";
+import Role from "../../models/role.model.js";
 import Token from "../../models/token.model.js";
 import crypto from 'crypto';
 import sendVerificationEmail from '../../utils/sendVerificationEmail.js';
 
 const register = async (req, res) => {
-    const {firstName, lastName, email, password, confirmPasssword ,phone,role} = req.body;
+    const {firstName, lastName, email, password, confirmPasssword ,phone} = req.body;
 
     try {
-        const userExists = await User.findOne({email});
+        const [userExists, roleExists] = await Promise.all([
+            User.findOne({ email }),
+            Role.findOne({ name: 'user' })
+        ]);
+
         if (userExists) {
-            return res.status(400).json({message: "User already exists"});
+            return res.status(400).json({ message: "User already exists" });
+        }
+
+        if (!roleExists) {
+            return res.status(400).json({ message: "Default role not found" });
         }
         const hashedPassword = await bcrypt.hash(password, 12);
 
@@ -23,19 +32,19 @@ const register = async (req, res) => {
             email,
             password: hashedPassword,
             phone,
-            role
+            roles : roleExists._id
         });
         const savedUser = await user.save();
 
         // Create and save the customer
         const customer = new Customer({
-            user: savedUser._id,
+            userId: savedUser._id,
         });
         await customer.save();
 
         // Generate JWT token
         const token = jwt.sign(
-            {userId: savedUser._id, email: savedUser.email,role:savedUser.role},
+            {userId: savedUser._id, email: savedUser.email, role : roleExists._id },
             process.env.JWT_SECRET,
             {expiresIn: "1h"}
         );
@@ -49,7 +58,7 @@ const register = async (req, res) => {
     await sendVerificationEmail(savedUser.email, verificationToken.token);
 
 
-        // Set the token as an HttpOnly cookie in the response
+        // Set cookie in the response
         res.cookie("token", token, {
             httpOnly: true,
             secure: false,
@@ -65,8 +74,8 @@ const register = async (req, res) => {
                 firstName,
                 lastName,
                 phone,
+                role:roleExists.name,
                 token,
-                role:savedUser.role,
             },
         });
         
