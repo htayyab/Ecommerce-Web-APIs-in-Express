@@ -1,7 +1,7 @@
 import express from 'express';
 import helmet from 'helmet';
 import cors from 'cors';
-import cookieParser from 'cookie-parser'; 
+import cookieParser from 'cookie-parser';
 import limiter from './src/middlewares/rateLimitMiddleware.js';
 import connectDB from './src/config/db.js';
 import authMiddleware from './src/middlewares/authMiddleware.js';
@@ -14,16 +14,16 @@ connectDB();
 
 // Middleware setup
 app.use(limiter);
-app.use(helmet()); 
+app.use(helmet());
 app.use(cors());
-app.use(express.static('public')); 
-app.use(express.json()); 
-app.use(cookieParser()); 
-app.use(express.urlencoded({ extended: false })); 
+app.use(express.static('public'));
+app.use(express.json());
+app.use(cookieParser());
+app.use(express.urlencoded({extended: false}));
 
 // Routes
 app.use('/api/', authRoutes);
-app.use('/api/categories',authMiddleware,categoryRoutes);
+app.use('/api/categories', authMiddleware, categoryRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 5000;

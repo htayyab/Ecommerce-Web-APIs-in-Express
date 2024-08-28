@@ -71,3 +71,66 @@ export const getCategoryById = async (req, res) => {
         });
     }
 };
+
+export const updateCategory = async (req, res) => {
+    const { id } = req.params;
+    const { name, description } = req.body; 
+    try {
+        const category = await Category.findById(id);
+
+        if (!category) {
+            return res.status(404).send({
+                status: 'error',
+                message: 'Category not found',
+            });
+        }
+
+        const existingCategory = await Category.findOne({ name });
+        if (existingCategory && existingCategory._id.toString() !== id) {
+            return res.status(400).send({
+                status: 'error',
+                message: 'Category name already exists',
+            });
+        }
+
+        category.name = name;
+        category.description = description;
+        await category.save();
+
+        res.status(200).send({
+            status: 'success',
+            message: 'Category updated successfully',
+            data: category,
+        });
+    } catch (error) {
+        res.status(500).send({
+            status: 'error',
+            message: error.message,
+        });
+    }
+};
+
+export const deleteCategory = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const category = await Category.findByIdAndDelete(id);
+
+        if (!category) {
+            return res.status(404).send({
+                status: 'error',
+                message: 'Category not found',
+            });
+        }
+
+        res.status(200).send({
+            status: 'success',
+            message: 'Category deleted successfully',
+        });
+    } catch (error) {
+        res.status(500).send({
+            status: 'error',
+            message: error.message,
+        });
+    }
+};

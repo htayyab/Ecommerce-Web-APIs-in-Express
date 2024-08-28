@@ -4,20 +4,14 @@ import login from '../controllers/auth/loginController.js';
 import verifyEmail from '../controllers/auth/verifyEmailController.js';
 import forgetPassword from '../controllers/auth/forgotPasswordController.js';
 import updatePassword from '../controllers/auth/updatePasswordController.js';
-import logout from '../controllers/auth/logoutController.js';
 import authMiddleware from '../middlewares/authMiddleware.js';
-import {registerValidation, loginValidation} from '../middlewares/validations/registerValidation.js';
-import updatePasswordValidation from "../middlewares/validations/updatePasswordValidation.js";
-import handleValidationErrors  from '../utils/handleValidationErrors.js';
-import logout from '../controllers/auth/logoutController.js';
-import forgotPasswordValidation from "../middlewares/validations/forgotPasswordValidation.js"
-
-
-
 import {registerValidation, loginValidation} from '../validations/registerValidation.js';
 import updatePasswordValidation from "../validations/updatePasswordValidation.js";
-import forgotPasswordValidation from '../validations/forgotPasswordValidation.js';
-import handleValidationErrors from '../utils/handleValidationErrors.js';
+import handleValidationErrors  from '../utils/handleValidationErrors.js';
+import logout from '../controllers/auth/logoutController.js';
+import forgotPasswordValidation from "../validations/forgotPasswordValidation.js"
+
+
 
 const router = express.Router();
 
