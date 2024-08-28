@@ -12,17 +12,18 @@ import logout from '../controllers/auth/logoutController.js';
 import forgotPasswordValidation from "../validations/forgotPasswordValidation.js"
 
 
+import {registerValidation, loginValidation} from '../middlewares/validations/registerValidation.js';
+import updatePasswordValidation from "../middlewares/validations/updatePasswordValidation.js";
+import forgotPasswordValidation from '../middlewares/validations/forgotPasswordValidation.js';
+import handleValidationErrors from '../utils/handleValidationErrors.js';
 
 const router = express.Router();
 
-router.post('/register',registerValidation,handleValidationErrors,register);
-
-router.post('/login',loginValidation,handleValidationErrors,login);
-router.post('/logout',logout );
-
+router.post('/register', registerValidation, handleValidationErrors, register);
+router.post('/login', loginValidation, handleValidationErrors, login);
 router.get('/verify-email', verifyEmail);
 router.post('/forgot-password',forgotPasswordValidation,handleValidationErrors,forgetPassword);
 router.put('/update-password', authMiddleware, updatePasswordValidation, handleValidationErrors, updatePassword);
-router.post('/logout', authMiddleware, logout); 
+router.post('/logout', authMiddleware, logout);
 
 export default router;
