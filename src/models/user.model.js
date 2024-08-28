@@ -32,10 +32,11 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false,
     },
-    roles: [{
+    role: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Role',
-    }],
+        required : true
+    },
 
 }, { timestamps: true });
 

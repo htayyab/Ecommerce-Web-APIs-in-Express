@@ -6,10 +6,7 @@ dotenv.config();
 
 const seedRoles = async () => {
     try {
-        await mongoose.connect(process.env.DB_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-        });
+        await mongoose.connect(process.env.DB_URI, );
 
         const roles = [
             {
@@ -37,8 +34,8 @@ const seedRoles = async () => {
     } catch (error) {
         console.error('Error seeding roles:', error.message);
     } finally {
-        mongoose.connection.close();
+        await mongoose.connection.close();
     }
 };
 
-seedRoles();
+export default seedRoles;
