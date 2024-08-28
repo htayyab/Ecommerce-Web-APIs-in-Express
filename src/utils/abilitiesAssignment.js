@@ -14,8 +14,6 @@ export default async function defineAbilitiesFor(user) {
         const [action, resource] = permission.split('_');
         if (action && resource) {
             can(action, resource.toLowerCase());
-            console.log(action, resource.toLowerCase());
-
         } else {
             console.error(`Invalid permission format: ${permission}`);
         }

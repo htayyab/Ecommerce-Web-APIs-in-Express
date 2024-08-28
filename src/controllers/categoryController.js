@@ -1,23 +1,22 @@
-// controllers/categoryController.js
 import Category from '../models/category.model.js';
 
 // get list of categories
 export const getAllCategories = async (req, res) => {
     try {
-        const categories = await Category.find({}).sort({ _id: -1 });
+        const categories = await Category.find({}).sort({_id: -1});
         if (categories.length === 0) {
-            return res.status(200).send({
+            return res.status(200).json({
                 status: 'success',
                 message: 'No categories found',
                 data: [],
             });
         }
-        res.status(200).send({
+        res.status(200).json({
             status: 'success',
             data: categories,
         });
     } catch (error) {
-        res.status(500).send({
+        res.status(500).json({
             status: 'error',
             message: error.message,
         });
@@ -27,21 +26,21 @@ export const getAllCategories = async (req, res) => {
 // add category
 export const addCategory = async (req, res) => {
     try {
-        const existingCategory = await Category.findOne({ name: req.body.name });
+        const existingCategory = await Category.findOne({name: req.body.name});
         if (existingCategory) {
-            return res.status(400).send({
+            return res.status(400).json({
                 status: 'error',
                 message: 'Category name already exists',
             });
         }
         const createCategory = new Category(req.body);
         await createCategory.save();
-        res.status(201).send({
+        res.status(201).json({
             status: 'success',
             message: 'Category added successfully',
         });
     } catch (error) {
-        res.status(500).send({
+        res.status(500).json({
             status: 'error',
             message: error.message,
         });
@@ -50,66 +49,63 @@ export const addCategory = async (req, res) => {
 
 // get specific category
 export const getCategoryById = async (req, res) => {
-    const { id } = req.params;
+    const {id} = req.params;
 
     try {
         const category = await Category.findById(id);
         if (!category) {
-            return res.status(404).send({
+            return res.status(404).json({
                 status: 'error',
                 message: 'Category not found',
             });
         }
-        res.status(200).send({
+        res.status(200).json({
             status: 'success',
             data: category,
         });
     } catch (error) {
-        res.status(500).send({
+        res.status(500).json({
             status: 'error',
             message: error.message,
         });
     }
 };
 
-export const updateCategory = async (req, res) => {
-    const { id } = req.params;
-    const { name, description } = req.body; 
+// update category
+export const updateCategoryById = async (req, res) => {
+    const {id} = req.params;
+    const {name, description} = req.body;
+
     try {
         const category = await Category.findById(id);
 
         if (!category) {
-            return res.status(404).send({
+            return res.status(404).json({
                 status: 'error',
                 message: 'Category not found',
             });
         }
 
-        const existingCategory = await Category.findOne({ name });
-        if (existingCategory && existingCategory._id.toString() !== id) {
-            return res.status(400).send({
-                status: 'error',
-                message: 'Category name already exists',
-            });
-        }
+        if (name) category.name = name;
+        if (description) category.description = description;
 
-        category.name = name;
-        category.description = description;
         await category.save();
 
-        res.status(200).send({
+        res.status(200).json({
             status: 'success',
             message: 'Category updated successfully',
-            data: category,
+            data: category
         });
     } catch (error) {
-        res.status(500).send({
+        res.status(500).json({
             status: 'error',
             message: error.message,
         });
     }
-};
+}
 
+
+// delete category
 export const deleteCategory = async (req, res) => {
     const { id } = req.params;
 
@@ -117,20 +113,20 @@ export const deleteCategory = async (req, res) => {
         const category = await Category.findByIdAndDelete(id);
 
         if (!category) {
-            return res.status(404).send({
+            return res.status(404).json({
                 status: 'error',
                 message: 'Category not found',
             });
         }
 
-        res.status(200).send({
+        res.status(200).json({
             status: 'success',
             message: 'Category deleted successfully',
         });
     } catch (error) {
-        res.status(500).send({
+        res.status(500).json({
             status: 'error',
             message: error.message,
         });
     }
-};
+}
