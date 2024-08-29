@@ -7,7 +7,7 @@ import connectDB from './src/config/db.js';
 import authMiddleware from './src/middlewares/authMiddleware.js';
 import authRoutes from './src/routes/auth.routes.js';
 import categoryRoutes from './src/routes/category.routes.js';
-
+import productRoutes from './src/routes/product.routes.js'
 const app = express();
 
 connectDB();
@@ -24,6 +24,7 @@ app.use(cookieParser());
 // Routes
 app.use('/api/', authRoutes);
 app.use('/api/categories', authMiddleware, categoryRoutes);
+app.use('/api/products', authMiddleware, productRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 5000;

@@ -26,20 +26,13 @@ export const getAllCategories = async (req, res) => {
 // add category
 export const addCategory = async (req, res) => {
     try {
-        const existingCategory = await Category.findOne({name: req.body.name});
-        if (existingCategory) {
-            return res.status(400).json({
-                status: 'error',
-                message: 'Category name already exists',
-            });
-        }
         const createCategory = new Category(req.body);
         await createCategory.save();
         res.status(201).json({
             status: 'success',
             message: 'Category added successfully',
         });
-    } catch (error) {
+        } catch (error) {
         res.status(500).json({
             status: 'error',
             message: error.message,

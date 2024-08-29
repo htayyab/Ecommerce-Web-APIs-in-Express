@@ -6,7 +6,14 @@ export const addCategoryValidation = [
         .notEmpty().withMessage('Name is required')
         .isString().withMessage('Name must be a string')
         .trim()
-        .isLength({min: 3, max: 50}).withMessage('Name must be between 3 and 50 characters long'),
+        .isLength({min: 3, max: 50}).withMessage('Name must be between 3 and 50 characters long')
+        .custom(async (value, {req}) => {
+            const existingCategory = await Category.findOne({name: value});
+            if (existingCategory && existingCategory._id.toString() !== req.params.id.toString()) {
+                throw new Error('Category name already exists');
+            }
+            return true;
+        }),
 
     body('description')
         .optional()
