@@ -23,8 +23,9 @@ app.use(cookieParser());
 
 // Routes
 app.use('/api/', authRoutes);
-app.use('/api/categories', authMiddleware, categoryRoutes);
-app.use('/api/products', authMiddleware, productRoutes);
+app.use(authMiddleware);
+app.use('/api/categories', categoryRoutes);
+app.use('/api/products', productRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 5000;
