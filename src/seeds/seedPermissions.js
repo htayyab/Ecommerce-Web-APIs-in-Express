@@ -28,6 +28,11 @@ const seedPermissions = async () => {
             {name: 'create_product', description: 'Permission to create product'},
             {name: 'edit_product', description: 'Permission to edit product'},
             {name: 'delete_product', description: 'Permission to delete product'},
+             // Order Permissions
+            {name: 'read_order', description: 'Permission to read order'},
+            {name: 'create_order', description: 'Permission to create order'},
+            {name: 'edit_order', description: 'Permission to edit order'},
+            {name: 'delete_order', description: 'Permission to delete order'},
         ];
 
         await Promise.all(permissions.map(async (permission) => {

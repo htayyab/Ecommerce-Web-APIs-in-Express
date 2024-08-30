@@ -8,6 +8,7 @@ import authMiddleware from './src/middlewares/authMiddleware.js';
 import authRoutes from './src/routes/auth.routes.js';
 import categoryRoutes from './src/routes/category.routes.js';
 import productRoutes from './src/routes/product.routes.js'
+import orderRoutes from "./src/routes/order.routes.js"
 const app = express();
 
 connectDB();
@@ -26,6 +27,7 @@ app.use('/api/', authRoutes);
 app.use(authMiddleware);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/orders', orderRoutes);
 
 // Start the server
 const PORT = process.env.PORT || 5000;
