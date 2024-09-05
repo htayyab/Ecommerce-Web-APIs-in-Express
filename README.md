@@ -1,1 +1,1 @@
-This is ecommerce website.
+This is ecommerce website.implement JWT token based authentication ,nodeMailer to send email when User Register the Website,Role Base Access Control using Casl Package,Crud Operations on Category ,Products ,order ,etc.Usig Seeder method to seed the UserData its roles and its permissions to Control which Acces rights a user have.Test all the API in POSTMAN.
